@@ -1,0 +1,22 @@
+# yaml-language-server: $schema=./node_modules/envio/evm.schema.json
+name: erc20indexer
+description: ERC-20 indexer
+networks:
+  - id: 42220 # Celo
+    start_block: 28283674
+    contracts:
+      - name: COMMONS
+        address: "0x7b97031b6297bc8e030b07bd84ce92fea1b00c3e" #COMMONS
+        handler: src/EventHandlers.ts
+        events:
+          - event: "Approval(address indexed owner, address indexed spender, uint256 value)"
+          - event: "Transfer(address indexed from, address indexed to, uint256 value)"
+      - name: COMMONSSTAKING
+        address: "0x034f8eb38f0ac305b5baec6266ffdbcefa67fbd8" #COMMONSSTAKING
+        handler: src/EventHandlers.ts
+        events:
+          - event: "Staked(address indexed staker, uint256 indexed tokenId, uint256 amount)"
+          - event: "Unstaked(address indexed staker, uint256 indexed tokenId, uint256 amount)"
+# Rollback on reorg mode currently incurs a performance hit on historical sync
+# while developing an indexer we recommend setting this to false
+rollback_on_reorg: false

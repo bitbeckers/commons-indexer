@@ -1,0 +1,36 @@
+type Account {
+  # id is the address of the account
+  id: ID!
+  # approvals are a list of approvals that this account has given
+  approvals: [Approval!]! @derivedFrom(field: "owner")
+  # account balance of tokens
+  balance: BigInt!
+  # staked NFTs
+  stakedNFTs: [StakedNFT!]! @derivedFrom(field: "owner")
+}
+
+type Approval {
+  # id is the owner address and spender address [owner-spender]
+  id: ID!
+  # amount is the amount of tokens approved
+  amount: BigInt!
+  # owner is the account that approved the tokens
+  owner: Account!
+  # spender is the account that is approved to spend the tokens
+  spender: Account!
+}
+
+type StakedNFT {
+  # id is the owner address and tokenId [owner-tokenId]
+  id: ID!
+  # amount is the amount of tokens staked
+  amount: BigInt!
+  # owner is the account that staked the tokens
+  owner: Account!
+  # tokenId is the tokenId of the staked NFT
+  tokenId: BigInt!
+  # timestamp is the timestamp of the staking
+  timestamp: BigInt!
+  # if the staked NFT an active stake
+  active: Boolean!
+}
